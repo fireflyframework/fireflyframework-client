@@ -73,9 +73,9 @@ The `MultipartUploadHelper` provides an **enterprise-grade** API for uploading f
 ### ✨ Production-Ready Setup (Recommended)
 
 ```java
-import com.firefly.common.client.multipart.MultipartUploadHelper;
-import com.firefly.common.client.multipart.MultipartUploadHelper.UploadConfig;
-import com.firefly.common.client.multipart.MultipartUploadHelper.UploadResponse;
+import org.fireflyframework.client.multipart.MultipartUploadHelper;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadConfig;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadResponse;
 import reactor.core.publisher.Mono;
 import java.io.File;
 import java.time.Duration;
@@ -763,9 +763,9 @@ uploader.uploadFile(...).subscribe(result -> handleSuccess(result));
 ### Example 1: Document Management System
 
 ```java
-import com.firefly.common.client.multipart.MultipartUploadHelper;
-import com.firefly.common.client.multipart.MultipartUploadHelper.UploadConfig;
-import com.firefly.common.client.multipart.MultipartUploadHelper.UploadResponse;
+import org.fireflyframework.client.multipart.MultipartUploadHelper;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadConfig;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import java.io.File;

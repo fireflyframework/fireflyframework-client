@@ -70,7 +70,7 @@ The `WebSocketClientHelper` provides an enterprise-grade reactive API for WebSoc
 ### Basic Connection
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper;
+import org.fireflyframework.client.websocket.WebSocketClientHelper;
 
 // Create WebSocket helper
 WebSocketClientHelper wsHelper = new WebSocketClientHelper("ws://localhost:8080/notifications");
@@ -95,7 +95,7 @@ wsHelper.receiveMessages(message -> {
 ### Production-Ready Setup
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper.WebSocketConfig;
+import org.fireflyframework.client.websocket.WebSocketClientHelper.WebSocketConfig;
 import java.time.Duration;
 
 // Configure for production
@@ -838,8 +838,8 @@ public void monitorWebSocket() {
 ### Example 1: Real-Time Chat Application
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper;
-import com.firefly.common.client.websocket.WebSocketClientHelper.WebSocketConfig;
+import org.fireflyframework.client.websocket.WebSocketClientHelper;
+import org.fireflyframework.client.websocket.WebSocketClientHelper.WebSocketConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import reactor.core.publisher.Sinks;
 

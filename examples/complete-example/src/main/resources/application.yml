@@ -70,8 +70,8 @@ management:
 logging:
   level:
     root: INFO
-    com.firefly: DEBUG
-    com.firefly.common.client: DEBUG
+    org.fireflyframework: DEBUG
+    org.fireflyframework.client: DEBUG
     org.springframework.web: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

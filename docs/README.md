@@ -34,8 +34,8 @@ Add to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>com.firefly</groupId>
-    <artifactId>lib-common-client</artifactId>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -43,8 +43,8 @@ Add to your `pom.xml`:
 ### Your First REST Client
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 
 @Service
 public class UserService {
@@ -70,8 +70,8 @@ public class UserService {
 ### Your First gRPC Client
 
 ```java
-import com.firefly.common.client.GrpcClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.GrpcClient;
+import org.fireflyframework.client.ServiceClient;
 
 @Service
 public class PaymentService {
@@ -95,8 +95,8 @@ public class PaymentService {
 ### Your First SOAP Client
 
 ```java
-import com.firefly.common.client.SoapClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.SoapClient;
+import org.fireflyframework.client.ServiceClient;
 
 @Service
 public class EquifaxService {
@@ -165,7 +165,7 @@ Mono<Response> response = restClient.get("/endpoint", Response.class).execute();
 |----------|-------------|-------------|---------|
 | **REST/HTTP** | `RestClient` | HTTP APIs, RESTful services | User service, Payment API |
 | **gRPC** | `GrpcClient<T>` | High-performance RPC, streaming | Real-time notifications, Analytics |
-| **SOAP** | `SoapClient` | Legacy SOAP/WSDL services | Banking APIs, Government services |
+| **SOAP** | `SoapClient` | Legacy SOAP/WSDL services | Enterprise APIs, Government services |
 
 ---
 
@@ -292,7 +292,7 @@ class UserServiceTest {
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/firefly-oss/lib-common-client/issues)
+- **Issues**: [GitHub Issues](https://github.org/fireflyframework-oss/fireflyframework-client/issues)
 - **Documentation**: This directory
 - **Examples**: See `/examples` directory in the repository
 

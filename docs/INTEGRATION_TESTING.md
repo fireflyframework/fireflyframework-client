@@ -81,7 +81,7 @@ For gRPC testing, we use in-process servers:
 ## REST Client Integration Tests
 
 ### Location
-`src/test/java/com/firefly/common/client/rest/RestClientIntegrationTest.java`
+`src/test/java/org/fireflyframework/common/client/rest/RestClientIntegrationTest.java`
 
 ### Test Coverage
 
@@ -203,7 +203,7 @@ mvn test -Dtest=RestClientIntegrationTest
 ## gRPC Client Integration Tests
 
 ### Location
-`src/test/java/com/firefly/common/client/grpc/GrpcClientIntegrationTest.java`
+`src/test/java/org/fireflyframework/common/client/grpc/GrpcClientIntegrationTest.java`
 
 ### Test Coverage
 
@@ -289,7 +289,7 @@ mvn test -Dtest=GrpcClientIntegrationTest
 ## SOAP Client Integration Tests
 
 ### Location
-`src/test/java/com/firefly/common/client/soap/SoapClientIntegrationTest.java`
+`src/test/java/org/fireflyframework/common/client/soap/SoapClientIntegrationTest.java`
 
 ### Test Coverage
 
@@ -357,7 +357,7 @@ mvn test -Dtest=SoapClientIntegrationTest
 
 ### GraphQL Helper
 
-**Unit Tests Location:** `src/test/java/com/firefly/common/client/helpers/GraphQLClientHelperTest.java`
+**Unit Tests Location:** `src/test/java/org/fireflyframework/common/client/helpers/GraphQLClientHelperTest.java`
 
 **Coverage:**
 - ✅ Query execution
@@ -370,7 +370,7 @@ mvn test -Dtest=SoapClientIntegrationTest
 
 ### OAuth2 Helper
 
-**Unit Tests Location:** `src/test/java/com/firefly/common/client/helpers/OAuth2ClientHelperTest.java`
+**Unit Tests Location:** `src/test/java/org/fireflyframework/common/client/helpers/OAuth2ClientHelperTest.java`
 
 **Coverage:**
 - ✅ Token acquisition
@@ -382,7 +382,7 @@ mvn test -Dtest=SoapClientIntegrationTest
 
 ### Multipart Upload Helper
 
-**Unit Tests Location:** `src/test/java/com/firefly/common/client/helpers/MultipartUploadHelperTest.java`
+**Unit Tests Location:** `src/test/java/org/fireflyframework/common/client/helpers/MultipartUploadHelperTest.java`
 
 **Coverage:**
 - ✅ File upload
@@ -395,7 +395,7 @@ mvn test -Dtest=SoapClientIntegrationTest
 
 ### WebSocket Helper
 
-**Unit Tests Location:** `src/test/java/com/firefly/common/client/helpers/WebSocketClientHelperTest.java`
+**Unit Tests Location:** `src/test/java/org/fireflyframework/common/client/helpers/WebSocketClientHelperTest.java`
 
 **Coverage:**
 - ✅ Connection management

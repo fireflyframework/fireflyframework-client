@@ -17,8 +17,8 @@ Complete guide for using the REST client to communicate with HTTP/REST services.
 ## Quick Start
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -275,7 +275,7 @@ Mono<Response<List<Order>>> response = client.get("/orders",
 For cases where you don't have or don't want to create DTOs, use `DynamicJsonResponse`:
 
 ```java
-import com.firefly.common.client.dynamic.DynamicJsonResponse;
+import org.fireflyframework.client.dynamic.DynamicJsonResponse;
 
 // ✅ No DTO needed - Access fields dynamically
 Mono<String> userName = client.get("/users/{id}", DynamicJsonResponse.class)
@@ -422,7 +422,7 @@ Mono<List<User>> users = client.get("/users", new TypeReference<List<User>>() {}
 ### Error Handling
 
 ```java
-import com.firefly.common.client.exception.*;
+import org.fireflyframework.client.exception.*;
 
 Mono<User> user = client.get("/users/{id}", User.class)
     .withPathParam("id", "123")
@@ -631,7 +631,7 @@ The REST client focuses on standard HTTP operations. For specialized use cases, 
 ✅ **Helper Available**: `WebSocketClientHelper`
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper;
+import org.fireflyframework.client.websocket.WebSocketClientHelper;
 
 WebSocketClientHelper wsHelper = new WebSocketClientHelper("ws://localhost:8080/notifications");
 wsHelper.receiveMessages(message -> {
@@ -650,7 +650,7 @@ wsHelper.receiveMessages(message -> {
 ✅ **Helper Available**: `MultipartUploadHelper`
 
 ```java
-import com.firefly.common.client.multipart.MultipartUploadHelper;
+import org.fireflyframework.client.multipart.MultipartUploadHelper;
 
 MultipartUploadHelper uploader = new MultipartUploadHelper("http://localhost:8080");
 Mono<UploadResponse> response = uploader.uploadFile(
@@ -672,7 +672,7 @@ Mono<UploadResponse> response = uploader.uploadFile(
 ✅ **Helper Available**: `OAuth2ClientHelper`
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
 
 OAuth2ClientHelper oauth2 = new OAuth2ClientHelper(
     "https://auth.example.com/oauth/token",
@@ -701,7 +701,7 @@ oauth2.getClientCredentialsToken().flatMap(token ->
 ✅ **Helper Available**: `GraphQLClientHelper`
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
 
 GraphQLClientHelper graphql = new GraphQLClientHelper("https://api.example.com/graphql");
 

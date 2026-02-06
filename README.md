@@ -74,8 +74,8 @@ A comprehensive, reactive service communication framework for microservice archi
 
 ```xml
 <dependency>
-    <groupId>com.firefly</groupId>
-    <artifactId>lib-common-client</artifactId>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -97,8 +97,8 @@ public class MyApplication {
 ### Simple REST Example
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -142,8 +142,8 @@ public class UserService {
 
 ```xml
 <dependency>
-    <groupId>com.firefly</groupId>
-    <artifactId>lib-common-client</artifactId>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -151,7 +151,7 @@ public class UserService {
 ### Gradle
 
 ```gradle
-implementation 'com.firefly:lib-common-client:1.0.0-SNAPSHOT'
+implementation 'org.fireflyframework:fireflyframework-client:1.0.0-SNAPSHOT'
 ```
 
 ### Requirements
@@ -188,8 +188,8 @@ public class MyApplication {
 Create a service class and build your first REST client:
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Service;
 import java.time.Duration;
@@ -268,8 +268,8 @@ firefly:
 If you're using gRPC, here's how to set up your first gRPC client:
 
 ```java
-import com.firefly.common.client.GrpcClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.GrpcClient;
+import org.fireflyframework.client.ServiceClient;
 import com.example.grpc.PaymentServiceGrpc;
 import com.example.grpc.PaymentServiceGrpc.PaymentServiceStub;
 
@@ -299,8 +299,8 @@ public class PaymentService {
 If you need to integrate with legacy SOAP/WSDL services, here's how to set up a SOAP client with a modern reactive API:
 
 ```java
-import com.firefly.common.client.SoapClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.SoapClient;
+import org.fireflyframework.client.ServiceClient;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -447,8 +447,8 @@ events.bufferTimeout(100, Duration.ofSeconds(5))
 #### Basic gRPC Setup
 
 ```java
-import com.firefly.common.client.GrpcClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.GrpcClient;
+import org.fireflyframework.client.ServiceClient;
 import com.example.grpc.PaymentServiceGrpc;
 import com.example.grpc.PaymentServiceGrpc.PaymentServiceStub;
 
@@ -491,8 +491,8 @@ The library includes production-ready helpers for common integration patterns.
 Enterprise-grade GraphQL client with caching, retry, and batch operations:
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
-import com.firefly.common.client.graphql.GraphQLConfig;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLConfig;
 
 @Service
 public class GraphQLService {
@@ -556,8 +556,8 @@ public class GraphQLService {
 Production-ready OAuth2 client with multi-scope token caching and automatic refresh:
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
-import com.firefly.common.client.oauth2.OAuth2Config;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2Config;
 
 @Service
 public class OAuth2Service {
@@ -599,8 +599,8 @@ public class OAuth2Service {
 Enterprise file upload with progress tracking, chunked uploads, and parallel processing:
 
 ```java
-import com.firefly.common.client.multipart.MultipartUploadHelper;
-import com.firefly.common.client.multipart.MultipartConfig;
+import org.fireflyframework.client.multipart.MultipartUploadHelper;
+import org.fireflyframework.client.multipart.MultipartConfig;
 
 @Service
 public class FileUploadService {
@@ -653,8 +653,8 @@ public class FileUploadService {
 Production-ready WebSocket client with automatic reconnection and heartbeat:
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper;
-import com.firefly.common.client.websocket.WebSocketConfig;
+import org.fireflyframework.client.websocket.WebSocketClientHelper;
+import org.fireflyframework.client.websocket.WebSocketConfig;
 
 @Service
 public class WebSocketService {
@@ -703,7 +703,7 @@ Enterprise-grade security features for production deployments.
 Prevent MITM attacks with SHA-256 certificate pinning:
 
 ```java
-import com.firefly.common.client.security.CertificatePinningManager;
+import org.fireflyframework.client.security.CertificatePinningManager;
 
 CertificatePinningManager pinning = CertificatePinningManager.builder()
     .addPin("api.example.com", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
@@ -719,7 +719,7 @@ SSLContext sslContext = pinning.createSslContext();
 Secure API key management with rotation and expiration:
 
 ```java
-import com.firefly.common.client.security.ApiKeyManager;
+import org.fireflyframework.client.security.ApiKeyManager;
 
 // Static API key
 ApiKeyManager keyManager = ApiKeyManager.simple("service-name", "api-key-12345");
@@ -740,7 +740,7 @@ String currentKey = keyManager.getCurrentApiKey();
 Validate JWT tokens with signature verification and claims validation:
 
 ```java
-import com.firefly.common.client.security.JwtValidator;
+import org.fireflyframework.client.security.JwtValidator;
 
 JwtValidator validator = JwtValidator.builder()
     .secret("your-secret-key")
@@ -759,7 +759,7 @@ String userId = claims.getSubject();
 AES-256-GCM encryption for sensitive data:
 
 ```java
-import com.firefly.common.client.security.SecretsEncryptionManager;
+import org.fireflyframework.client.security.SecretsEncryptionManager;
 
 SecretsEncryptionManager encryption = SecretsEncryptionManager.builder()
     .masterKey("your-32-byte-master-key-here!!")
@@ -779,7 +779,7 @@ String apiKey = encryption.getSecret("payment-api-key");
 Prevent overwhelming downstream services:
 
 ```java
-import com.firefly.common.client.security.ClientSideRateLimiter;
+import org.fireflyframework.client.security.ClientSideRateLimiter;
 
 ClientSideRateLimiter rateLimiter = ClientSideRateLimiter.builder()
     .serviceName("payment-service")
@@ -808,7 +808,7 @@ Comprehensive observability features for production monitoring.
 Track request performance with Micrometer integration:
 
 ```java
-import com.firefly.common.client.metrics.PerformanceMetricsCollector;
+import org.fireflyframework.client.metrics.PerformanceMetricsCollector;
 
 PerformanceMetricsCollector metrics = new PerformanceMetricsCollector(meterRegistry);
 
@@ -827,7 +827,7 @@ log.info("Total requests: {}, Success rate: {}%",
 Spring Boot Actuator integration for health monitoring:
 
 ```java
-import com.firefly.common.client.health.ServiceClientHealthIndicator;
+import org.fireflyframework.client.health.ServiceClientHealthIndicator;
 
 // Automatically exposed via Spring Boot Actuator
 // Access at: /actuator/health/serviceClient
@@ -853,7 +853,7 @@ public class CustomHealthIndicator extends ServiceClientHealthIndicator {
 Advanced logging with sensitive data masking:
 
 ```java
-import com.firefly.common.client.interceptor.RequestResponseLoggingInterceptor;
+import org.fireflyframework.client.interceptor.RequestResponseLoggingInterceptor;
 
 RequestResponseLoggingInterceptor logging = RequestResponseLoggingInterceptor.builder()
     .logLevel(LogLevel.FULL)
@@ -1067,7 +1067,7 @@ public class CircuitBreakerMonitorService {
 ### Error Handling Strategies
 
 ```java
-import com.firefly.common.client.exception.*;
+import org.fireflyframework.client.exception.*;
 
 public Mono<User> getUserWithAdvancedErrorHandling(String userId) {
     return userClient.get("/users/{id}", User.class)
@@ -1181,12 +1181,12 @@ The library follows a layered architecture designed for scalability and maintain
 
 ### Key Components
 
-- **ServiceClient Interface** (`com.firefly.common.client.ServiceClient`)
-- **REST Implementation** (`com.firefly.common.client.impl.RestServiceClientImpl`)
-- **gRPC Implementation** (`com.firefly.common.client.impl.GrpcServiceClientImpl`)
-- **Circuit Breaker** (`com.firefly.common.resilience.CircuitBreakerManager`)
-- **Configuration** (`com.firefly.common.config.ServiceClientProperties`)
-- **Builder Pattern** (`com.firefly.common.client.builder.*`)
+- **ServiceClient Interface** (`org.fireflyframework.client.ServiceClient`)
+- **REST Implementation** (`org.fireflyframework.client.impl.RestServiceClientImpl`)
+- **gRPC Implementation** (`org.fireflyframework.client.impl.GrpcServiceClientImpl`)
+- **Circuit Breaker** (`org.fireflyframework.resilience.CircuitBreakerManager`)
+- **Configuration** (`org.fireflyframework.config.ServiceClientProperties`)
+- **Builder Pattern** (`org.fireflyframework.client.builder.*`)
 
 ## 📚 Documentation
 

@@ -73,7 +73,7 @@ The `GraphQLClientHelper` provides a **production-ready, enterprise-grade** API 
 ### Basic Setup
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
 import reactor.core.publisher.Mono;
 
 // Create GraphQL client
@@ -154,7 +154,7 @@ GraphQLClientHelper graphql = new GraphQLClientHelper(
 ### ✨ Production-Ready Configuration (Recommended)
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper.GraphQLConfig;
+import org.fireflyframework.client.graphql.GraphQLClientHelper.GraphQLConfig;
 import java.time.Duration;
 
 // Enterprise-grade configuration with all features
@@ -194,7 +194,7 @@ GraphQLClientHelper graphql = new GraphQLClientHelper(
 ### With OAuth2 Integration
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
 
 // Setup OAuth2
 OAuth2ClientHelper oauth2 = new OAuth2ClientHelper(
@@ -529,7 +529,7 @@ Execute multiple GraphQL queries in parallel for improved performance.
 ### Using GraphQLRequest Builder
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper.GraphQLRequest;
+import org.fireflyframework.client.graphql.GraphQLClientHelper.GraphQLRequest;
 import java.util.List;
 
 // Build multiple requests
@@ -905,7 +905,7 @@ public class UserService {
 ### Example 1: GitHub API Integration
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
 import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.Map;
@@ -1040,7 +1040,7 @@ public class GitHubGraphQLClient {
 ### Example 2: E-commerce Product Catalog
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
 import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;

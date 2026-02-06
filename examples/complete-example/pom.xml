@@ -5,12 +5,12 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.firefly.example</groupId>
+    <groupId>org.fireflyframework.example</groupId>
     <artifactId>complete-example</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Firefly Common Client - Complete Example</name>
+    <name>Firefly Framework - Common Client - Complete Example</name>
     <description>Complete example demonstrating all features of Firefly Common Client Library</description>
 
     <parent>
@@ -30,8 +30,8 @@
     <dependencies>
         <!-- Firefly Common Client Library -->
         <dependency>
-            <groupId>com.firefly</groupId>
-            <artifactId>lib-common-client</artifactId>
+            <groupId>org.fireflyframework</groupId>
+            <artifactId>fireflyframework-client</artifactId>
             <version>1.0.0</version>
         </dependency>
 

@@ -359,7 +359,7 @@ public class CustomMetricsPlugin implements ServiceClientPlugin {
 
 ### Registering a Plugin
 
-Create file: `META-INF/services/com.firefly.common.client.plugin.ServiceClientPlugin`
+Create file: `META-INF/services/org.fireflyframework.client.plugin.ServiceClientPlugin`
 
 ```
 com.example.CustomMetricsPlugin

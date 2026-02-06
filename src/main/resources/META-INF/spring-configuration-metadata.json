@@ -2,37 +2,37 @@
   "groups": [
     {
       "name": "firefly.service-client",
-      "type": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties",
       "description": "Configuration properties for Firefly Service Client framework."
     },
     {
       "name": "firefly.service-client.rest",
-      "type": "com.firefly.common.config.ServiceClientProperties$Rest",
-      "sourceType": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties$Rest",
+      "sourceType": "org.fireflyframework.config.ServiceClientProperties",
       "description": "REST client configuration properties."
     },
     {
       "name": "firefly.service-client.grpc",
-      "type": "com.firefly.common.config.ServiceClientProperties$Grpc",
-      "sourceType": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties$Grpc",
+      "sourceType": "org.fireflyframework.config.ServiceClientProperties",
       "description": "gRPC client configuration properties."
     },
     {
       "name": "firefly.service-client.soap",
-      "type": "com.firefly.common.config.ServiceClientProperties$Soap",
-      "sourceType": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties$Soap",
+      "sourceType": "org.fireflyframework.config.ServiceClientProperties",
       "description": "SOAP client configuration properties."
     },
     {
       "name": "firefly.service-client.circuit-breaker",
-      "type": "com.firefly.common.config.ServiceClientProperties$CircuitBreaker",
-      "sourceType": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties$CircuitBreaker",
+      "sourceType": "org.fireflyframework.config.ServiceClientProperties",
       "description": "Circuit breaker configuration properties."
     },
     {
       "name": "firefly.service-client.security",
-      "type": "com.firefly.common.config.ServiceClientProperties$Security",
-      "sourceType": "com.firefly.common.config.ServiceClientProperties",
+      "type": "org.fireflyframework.config.ServiceClientProperties$Security",
+      "sourceType": "org.fireflyframework.config.ServiceClientProperties",
       "description": "Security configuration properties."
     }
   ],

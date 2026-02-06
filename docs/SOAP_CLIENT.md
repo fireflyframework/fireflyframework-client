@@ -18,8 +18,8 @@ Complete guide for using the SOAP client to communicate with SOAP/WSDL services.
 ## Quick Start
 
 ```java
-import com.firefly.common.client.SoapClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.SoapClient;
+import org.fireflyframework.client.ServiceClient;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -315,7 +315,7 @@ public void checkHealth() {
 ### Error Handling
 
 ```java
-import com.firefly.common.client.exception.*;
+import org.fireflyframework.client.exception.*;
 
 public Mono<PaymentResponse> processPayment(PaymentRequest request) {
     return soapClient.invokeAsync("ProcessPayment", request, PaymentResponse.class)

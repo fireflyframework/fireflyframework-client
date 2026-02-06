@@ -23,8 +23,8 @@ Add the dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>com.firefly</groupId>
-    <artifactId>lib-common-client</artifactId>
+    <groupId>org.fireflyframework</groupId>
+    <artifactId>fireflyframework-client</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -34,7 +34,7 @@ Add the dependency to your `pom.xml`:
 Add the dependency to your `build.gradle`:
 
 ```gradle
-implementation 'com.firefly:lib-common-client:1.0.0'
+implementation 'org.fireflyframework:fireflyframework-client:1.0.0'
 ```
 
 ---
@@ -78,8 +78,8 @@ firefly:
 ### Simple GET Request
 
 ```java
-import com.firefly.common.client.ServiceClient;
-import com.firefly.common.client.rest.RestClient;
+import org.fireflyframework.client.ServiceClient;
+import org.fireflyframework.client.rest.RestClient;
 
 @Service
 public class UserService {
@@ -167,8 +167,8 @@ public List<User> searchUsers(String query, int page, int size) {
 ### Simple gRPC Call
 
 ```java
-import com.firefly.common.client.ServiceClient;
-import com.firefly.common.client.grpc.GrpcClient;
+import org.fireflyframework.client.ServiceClient;
+import org.fireflyframework.client.grpc.GrpcClient;
 
 @Service
 public class PaymentService {
@@ -207,8 +207,8 @@ public PaymentResponse processPaymentWithAuth(PaymentRequest request, String tok
 ### Simple SOAP Call
 
 ```java
-import com.firefly.common.client.ServiceClient;
-import com.firefly.common.client.soap.SoapClient;
+import org.fireflyframework.client.ServiceClient;
+import org.fireflyframework.client.soap.SoapClient;
 
 @Service
 public class LegacyService {
@@ -244,7 +244,7 @@ public LegacyService() {
 ### GraphQL Client
 
 ```java
-import com.firefly.common.client.graphql.GraphQLClientHelper;
+import org.fireflyframework.client.graphql.GraphQLClientHelper;
 
 @Service
 public class GraphQLService {
@@ -280,7 +280,7 @@ public class GraphQLService {
 ### OAuth2 Client
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
 
 @Service
 public class OAuth2Service {
@@ -304,7 +304,7 @@ public class OAuth2Service {
 ### Multipart Upload
 
 ```java
-import com.firefly.common.client.multipart.MultipartUploadHelper;
+import org.fireflyframework.client.multipart.MultipartUploadHelper;
 
 @Service
 public class FileUploadService {
@@ -330,7 +330,7 @@ public class FileUploadService {
 ### WebSocket Client
 
 ```java
-import com.firefly.common.client.websocket.WebSocketClientHelper;
+import org.fireflyframework.client.websocket.WebSocketClientHelper;
 
 @Service
 public class WebSocketService {
@@ -572,8 +572,8 @@ firefly:
 ## Getting Help
 
 - 📖 [Full Documentation](README.md)
-- 🐛 [Report Issues](https://github.com/firefly-oss/lib-common-client/issues)
-- 💬 [Discussions](https://github.com/firefly-oss/lib-common-client/discussions)
+- 🐛 [Report Issues](https://github.org/fireflyframework-oss/fireflyframework-client/issues)
+- 💬 [Discussions](https://github.org/fireflyframework-oss/fireflyframework-client/discussions)
 
 ---
 

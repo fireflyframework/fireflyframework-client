@@ -56,7 +56,7 @@ curl http://localhost:8080/actuator/metrics
 complete-example/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/firefly/example/
+│   │   ├── java/org/fireflyframework/example/
 │   │   │   ├── ExampleApplication.java          # Main application
 │   │   │   ├── model/                            # Data models
 │   │   │   │   ├── User.java
@@ -319,7 +319,7 @@ firefly:
 logging:
   level:
     root: WARN
-    com.firefly: INFO
+    org.fireflyframework: INFO
 ```
 
 ## Troubleshooting
@@ -371,6 +371,6 @@ This example is part of the Firefly Common Client Library.
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/firefly-oss/lib-common-client/issues
-- Documentation: https://github.com/firefly-oss/lib-common-client/docs
+- GitHub Issues: https://github.org/fireflyframework-oss/fireflyframework-client/issues
+- Documentation: https://github.org/fireflyframework-oss/fireflyframework-client/docs
 

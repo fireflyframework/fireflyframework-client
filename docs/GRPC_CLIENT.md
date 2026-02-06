@@ -19,8 +19,8 @@ Complete guide for using the gRPC client to communicate with gRPC services.
 ## Quick Start
 
 ```java
-import com.firefly.common.client.GrpcClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.GrpcClient;
+import org.fireflyframework.client.ServiceClient;
 import com.example.grpc.UserServiceGrpc;
 import com.example.grpc.UserServiceGrpc.UserServiceStub;
 

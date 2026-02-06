@@ -1,1 +1,1 @@
-com.firefly.common.config.ServiceClientAutoConfiguration
+org.fireflyframework.config.ServiceClientAutoConfiguration

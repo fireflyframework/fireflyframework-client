@@ -66,7 +66,7 @@ The `OAuth2ClientHelper` provides a **production-ready**, enterprise-grade API f
 ### Basic Setup
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
 import reactor.core.publisher.Mono;
 
 // Create OAuth2 helper with default configuration
@@ -87,8 +87,8 @@ tokenMono.subscribe(token -> {
 ### ✨ Production-Ready Setup (Recommended)
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
-import com.firefly.common.client.oauth2.OAuth2ClientHelper.OAuth2Config;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper.OAuth2Config;
 import java.time.Duration;
 
 // Create advanced configuration
@@ -117,8 +117,8 @@ oauth2.getClientCredentialsToken("api.read api.write")
 ### With REST Client Integration
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 
 RestClient restClient = ServiceClient.rest("api-service")
     .baseUrl("https://api.example.com")
@@ -558,8 +558,8 @@ oauth2.getClientCredentialsToken("api.read api.write")
 ### Basic Integration
 
 ```java
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 
 OAuth2ClientHelper oauth2 = new OAuth2ClientHelper(tokenEndpoint, clientId, clientSecret);
 RestClient restClient = ServiceClient.rest("api").baseUrl(apiUrl).build();
@@ -821,10 +821,10 @@ oauth2.getClientCredentialsToken()
 ### Example 1: Production-Ready Microservice Authentication
 
 ```java
-import com.firefly.common.client.oauth2.OAuth2ClientHelper;
-import com.firefly.common.client.oauth2.OAuth2ClientHelper.OAuth2Config;
-import com.firefly.common.client.RestClient;
-import com.firefly.common.client.ServiceClient;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper.OAuth2Config;
+import org.fireflyframework.client.RestClient;
+import org.fireflyframework.client.ServiceClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import java.time.Duration;
