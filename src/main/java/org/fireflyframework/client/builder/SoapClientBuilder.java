@@ -394,7 +394,7 @@ public class SoapClientBuilder {
 
         // Validate WSDL URL format
         try {
-            new URL(wsdlUrl);
+            java.net.URI.create(wsdlUrl).toURL();
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid WSDL URL: " + wsdlUrl, e);
         }

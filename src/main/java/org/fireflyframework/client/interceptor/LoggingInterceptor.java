@@ -202,7 +202,7 @@ public class LoggingInterceptor implements ServiceClientInterceptor {
     }
 
     private String generateRequestId() {
-        return "REQ-" + System.currentTimeMillis() + "-" + Thread.currentThread().getId();
+        return "REQ-" + System.currentTimeMillis() + "-" + Thread.currentThread().threadId();
     }
 
     public static Builder builder() {

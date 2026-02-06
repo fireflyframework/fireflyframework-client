@@ -369,7 +369,7 @@ public class DynamicJsonResponse {
         }
 
         Map<String, String> schema = new LinkedHashMap<>();
-        rootNode.fields().forEachRemaining(entry -> {
+        rootNode.properties().forEach(entry -> {
             String fieldName = entry.getKey();
             JsonNode fieldNode = entry.getValue();
             schema.put(fieldName, getNodeType(fieldNode));
@@ -572,7 +572,7 @@ public class DynamicJsonResponse {
         }
 
         Map<String, Object> schema = new LinkedHashMap<>();
-        node.fields().forEachRemaining(entry -> {
+        node.properties().forEach(entry -> {
             String fieldName = entry.getKey();
             JsonNode fieldNode = entry.getValue();
 

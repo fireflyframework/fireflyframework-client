@@ -189,8 +189,8 @@ public class RestClientBuilder {
         }
         
         try {
-            new java.net.URL(baseUrl);
-        } catch (java.net.MalformedURLException e) {
+            java.net.URI.create(baseUrl).toURL();
+        } catch (IllegalArgumentException | java.net.MalformedURLException e) {
             throw new IllegalStateException("Invalid base URL: " + baseUrl, e);
         }
     }

@@ -280,6 +280,7 @@ public class SoapServiceClientImpl implements SoapClient {
     /**
      * Configures SOAP message logging interceptors for debugging.
      */
+    @SuppressWarnings("deprecation")
     private void configureMessageLogging() {
         try {
             // Add logging interceptors for request/response
@@ -478,7 +479,7 @@ public class SoapServiceClientImpl implements SoapClient {
 
             // Verify WSDL is still accessible
             try {
-                URL wsdlURL = new URL(wsdlUrl);
+                URL wsdlURL = java.net.URI.create(wsdlUrl).toURL();
                 java.net.HttpURLConnection connection =
                     (java.net.HttpURLConnection) wsdlURL.openConnection();
                 connection.setRequestMethod("HEAD");

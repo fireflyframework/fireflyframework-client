@@ -393,7 +393,7 @@ public class AdvancedResilienceManager {
                     currentCpu = sunOsBean.getProcessCpuLoad();
                     if (currentCpu < 0) {
                         // Process CPU load not available, use system CPU load
-                        currentCpu = sunOsBean.getSystemCpuLoad();
+                    currentCpu = sunOsBean.getCpuLoad();
                     }
                 }
 
