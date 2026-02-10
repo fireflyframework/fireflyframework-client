@@ -19,7 +19,7 @@
 
     <properties>
         <aws.sdk2.version>2.25.32</aws.sdk2.version>
-        <grpc.version>1.60.1</grpc.version>
+        <grpc.version>1.79.0</grpc.version>
         <protobuf.version>3.25.1</protobuf.version>
     </properties>
 
@@ -164,7 +164,7 @@
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.3</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.soap</groupId>
@@ -185,7 +185,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-            <version>4.0.3</version>
+            <version>4.1.4</version>
             <exclusions>
                 <!-- Exclude spring-boot-starter-web to avoid conflicts with webflux -->
                 <exclusion>
@@ -197,7 +197,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-ws-security</artifactId>
-            <version>4.0.3</version>
+            <version>4.1.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wss4j</groupId>
@@ -212,7 +212,7 @@
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-xjc</artifactId>
-            <version>4.0.4</version>
+            <version>4.0.6</version>
         </dependency>
 
         <!-- Testing -->
@@ -243,7 +243,7 @@
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-standalone</artifactId>
-            <version>3.3.1</version>
+            <version>3.13.2</version>
             <scope>test</scope>
         </dependency>
 
