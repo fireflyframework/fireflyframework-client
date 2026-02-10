@@ -1,4 +1,6 @@
 # Firefly Common Client Library
+    
+[![CI](https://github.com/fireflyframework/fireflyframework-client/actions/workflows/ci.yml/badge.svg)](https://github.com/fireflyframework/fireflyframework-client/actions/workflows/ci.yml)
 
 [![Maven Central](https://img.shields.io/badge/Maven-1.0.0--SNAPSHOT-blue)](https://maven.apache.org)
 [![Java](https://img.shields.io/badge/Java-21+-orange)](https://openjdk.java.net/)
