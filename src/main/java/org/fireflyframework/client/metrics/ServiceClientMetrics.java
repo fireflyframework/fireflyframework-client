@@ -17,11 +17,9 @@
 package org.fireflyframework.client.metrics;
 
 import org.fireflyframework.client.ClientType;
+import org.fireflyframework.observability.metrics.FireflyMetricsSupport;
 import org.fireflyframework.resilience.CircuitBreakerState;
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Timer;
-import io.micrometer.core.instrument.Gauge;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
@@ -30,8 +28,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Micrometer metrics integration for ServiceClient.
- * 
- * <p>This class provides comprehensive metrics collection for service client operations:
+ *
+ * <p>This class provides comprehensive metrics collection for service client operations
+ * using the Firefly observability naming convention ({@code firefly.client.*}).
  * <ul>
  *   <li>Request counters (total, success, failure)</li>
  *   <li>Request duration timers</li>
@@ -43,24 +42,21 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0.0
  */
 @Slf4j
-public class ServiceClientMetrics {
+public class ServiceClientMetrics extends FireflyMetricsSupport {
 
-    private static final String METRIC_PREFIX = "service.client";
-    
-    private final MeterRegistry meterRegistry;
-    private final ConcurrentHashMap<String, ServiceMetrics> serviceMetricsMap;
-    
+    private final ConcurrentHashMap<String, ClientType> serviceClientTypes = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, AtomicInteger> circuitBreakerStates = new ConcurrentHashMap<>();
+
     /**
      * Creates a new ServiceClientMetrics instance.
      *
      * @param meterRegistry the Micrometer meter registry
      */
     public ServiceClientMetrics(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-        this.serviceMetricsMap = new ConcurrentHashMap<>();
+        super(meterRegistry, "client");
         log.info("Initialized ServiceClient metrics with Micrometer");
     }
-    
+
     /**
      * Records a successful request.
      *
@@ -70,14 +66,14 @@ public class ServiceClientMetrics {
      * @param duration the request duration
      */
     public void recordSuccess(String serviceName, ClientType clientType, String endpoint, Duration duration) {
-        ServiceMetrics metrics = getOrCreateMetrics(serviceName, clientType);
-        metrics.successCounter.increment();
-        metrics.requestTimer.record(duration);
-        
-        log.debug("Recorded successful request for service '{}' to endpoint '{}' in {}ms", 
+        ensureServiceRegistered(serviceName, clientType);
+        counter("requests.success", "service", serviceName, "client.type", clientType.name()).increment();
+        timer("requests.duration", "service", serviceName, "client.type", clientType.name()).record(duration);
+
+        log.debug("Recorded successful request for service '{}' to endpoint '{}' in {}ms",
             serviceName, endpoint, duration.toMillis());
     }
-    
+
     /**
      * Records a failed request.
      *
@@ -87,28 +83,22 @@ public class ServiceClientMetrics {
      * @param duration the request duration
      * @param errorType the error type/class name
      */
-    public void recordFailure(String serviceName, ClientType clientType, String endpoint, 
+    public void recordFailure(String serviceName, ClientType clientType, String endpoint,
                              Duration duration, String errorType) {
-        ServiceMetrics metrics = getOrCreateMetrics(serviceName, clientType);
-        metrics.failureCounter.increment();
-        
-        // Record error-specific counter
-        Counter errorCounter = Counter.builder(METRIC_PREFIX + ".errors")
-            .tag("service", serviceName)
-            .tag("client.type", clientType.name())
-            .tag("error.type", errorType)
-            .description("Total number of errors by type")
-            .register(meterRegistry);
-        errorCounter.increment();
-        
+        ensureServiceRegistered(serviceName, clientType);
+        counter("requests.failure", "service", serviceName, "client.type", clientType.name()).increment();
+
+        counter("errors", "service", serviceName, "client.type", clientType.name(),
+                "error.type", errorType).increment();
+
         if (duration != null) {
-            metrics.requestTimer.record(duration);
+            timer("requests.duration", "service", serviceName, "client.type", clientType.name()).record(duration);
         }
-        
-        log.debug("Recorded failed request for service '{}' to endpoint '{}': {}", 
+
+        log.debug("Recorded failed request for service '{}' to endpoint '{}': {}",
             serviceName, endpoint, errorType);
     }
-    
+
     /**
      * Records circuit breaker state.
      *
@@ -116,13 +106,13 @@ public class ServiceClientMetrics {
      * @param state the circuit breaker state
      */
     public void recordCircuitBreakerState(String serviceName, CircuitBreakerState state) {
-        ServiceMetrics metrics = serviceMetricsMap.get(serviceName);
-        if (metrics != null) {
-            metrics.circuitBreakerStateValue.set(state.ordinal());
+        AtomicInteger stateValue = circuitBreakerStates.get(serviceName);
+        if (stateValue != null) {
+            stateValue.set(state.ordinal());
             log.debug("Updated circuit breaker state for service '{}' to {}", serviceName, state);
         }
     }
-    
+
     /**
      * Records a circuit breaker state transition.
      *
@@ -130,70 +120,29 @@ public class ServiceClientMetrics {
      * @param fromState the previous state
      * @param toState the new state
      */
-    public void recordCircuitBreakerTransition(String serviceName, CircuitBreakerState fromState, 
+    public void recordCircuitBreakerTransition(String serviceName, CircuitBreakerState fromState,
                                               CircuitBreakerState toState) {
-        Counter transitionCounter = Counter.builder(METRIC_PREFIX + ".circuit.breaker.transitions")
-            .tag("service", serviceName)
-            .tag("from.state", fromState.name())
-            .tag("to.state", toState.name())
-            .description("Circuit breaker state transitions")
-            .register(meterRegistry);
-        transitionCounter.increment();
-        
+        counter("circuit.breaker.transitions", "service", serviceName,
+                "from.state", fromState.name(), "to.state", toState.name()).increment();
+
         recordCircuitBreakerState(serviceName, toState);
-        
+
         log.info("Circuit breaker transition for service '{}': {} -> {}", serviceName, fromState, toState);
     }
-    
+
     /**
-     * Gets or creates metrics for a service.
+     * Ensures gauge and state tracking are initialized for a service.
      */
-    private ServiceMetrics getOrCreateMetrics(String serviceName, ClientType clientType) {
-        return serviceMetricsMap.computeIfAbsent(serviceName, 
-            name -> new ServiceMetrics(name, clientType, meterRegistry));
+    private void ensureServiceRegistered(String serviceName, ClientType clientType) {
+        serviceClientTypes.computeIfAbsent(serviceName, name -> {
+            AtomicInteger stateValue = new AtomicInteger(CircuitBreakerState.CLOSED.ordinal());
+            circuitBreakerStates.put(name, stateValue);
+            gauge("circuit.breaker.state", stateValue, AtomicInteger::get,
+                  "service", name, "client.type", clientType.name());
+            return clientType;
+        });
     }
-    
-    /**
-     * Container for service-specific metrics.
-     */
-    private static class ServiceMetrics {
-        private final Counter successCounter;
-        private final Counter failureCounter;
-        private final Timer requestTimer;
-        private final AtomicInteger circuitBreakerStateValue;
-        
-        ServiceMetrics(String serviceName, ClientType clientType, MeterRegistry meterRegistry) {
-            // Success counter
-            this.successCounter = Counter.builder(METRIC_PREFIX + ".requests.success")
-                .tag("service", serviceName)
-                .tag("client.type", clientType.name())
-                .description("Total number of successful requests")
-                .register(meterRegistry);
-            
-            // Failure counter
-            this.failureCounter = Counter.builder(METRIC_PREFIX + ".requests.failure")
-                .tag("service", serviceName)
-                .tag("client.type", clientType.name())
-                .description("Total number of failed requests")
-                .register(meterRegistry);
-            
-            // Request duration timer
-            this.requestTimer = Timer.builder(METRIC_PREFIX + ".requests.duration")
-                .tag("service", serviceName)
-                .tag("client.type", clientType.name())
-                .description("Request duration in milliseconds")
-                .register(meterRegistry);
-            
-            // Circuit breaker state gauge
-            this.circuitBreakerStateValue = new AtomicInteger(CircuitBreakerState.CLOSED.ordinal());
-            Gauge.builder(METRIC_PREFIX + ".circuit.breaker.state", circuitBreakerStateValue, AtomicInteger::get)
-                .tag("service", serviceName)
-                .tag("client.type", clientType.name())
-                .description("Circuit breaker state (0=CLOSED, 1=OPEN, 2=HALF_OPEN)")
-                .register(meterRegistry);
-        }
-    }
-    
+
     /**
      * Gets the total number of requests for a service.
      *
@@ -201,13 +150,14 @@ public class ServiceClientMetrics {
      * @return the total request count, or 0 if no metrics exist
      */
     public long getTotalRequests(String serviceName) {
-        ServiceMetrics metrics = serviceMetricsMap.get(serviceName);
-        if (metrics == null) {
+        ClientType clientType = serviceClientTypes.get(serviceName);
+        if (clientType == null) {
             return 0;
         }
-        return (long) (metrics.successCounter.count() + metrics.failureCounter.count());
+        return (long) (counter("requests.success", "service", serviceName, "client.type", clientType.name()).count()
+                + counter("requests.failure", "service", serviceName, "client.type", clientType.name()).count());
     }
-    
+
     /**
      * Gets the success rate for a service.
      *
@@ -215,19 +165,19 @@ public class ServiceClientMetrics {
      * @return the success rate (0.0 to 1.0), or 0.0 if no metrics exist
      */
     public double getSuccessRate(String serviceName) {
-        ServiceMetrics metrics = serviceMetricsMap.get(serviceName);
-        if (metrics == null) {
+        ClientType clientType = serviceClientTypes.get(serviceName);
+        if (clientType == null) {
             return 0.0;
         }
-        
-        double total = metrics.successCounter.count() + metrics.failureCounter.count();
+
+        double success = counter("requests.success", "service", serviceName, "client.type", clientType.name()).count();
+        double total = success + counter("requests.failure", "service", serviceName, "client.type", clientType.name()).count();
         if (total == 0) {
             return 0.0;
         }
-        
-        return metrics.successCounter.count() / total;
+        return success / total;
     }
-    
+
     /**
      * Gets the current circuit breaker state for a service.
      *
@@ -235,13 +185,11 @@ public class ServiceClientMetrics {
      * @return the circuit breaker state, or CLOSED if no metrics exist
      */
     public CircuitBreakerState getCircuitBreakerState(String serviceName) {
-        ServiceMetrics metrics = serviceMetricsMap.get(serviceName);
-        if (metrics == null) {
+        AtomicInteger stateValue = circuitBreakerStates.get(serviceName);
+        if (stateValue == null) {
             return CircuitBreakerState.CLOSED;
         }
-        
-        int stateValue = metrics.circuitBreakerStateValue.get();
-        return CircuitBreakerState.values()[stateValue];
+        int stateOrdinal = stateValue.get();
+        return CircuitBreakerState.values()[stateOrdinal];
     }
 }
-
