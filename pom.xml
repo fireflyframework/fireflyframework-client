@@ -7,21 +7,15 @@
     <parent>
         <groupId>org.fireflyframework</groupId>
         <artifactId>fireflyframework-parent</artifactId>
-        <version>26.02.01</version>
+        <version>26.02.02</version>
     </parent>
 
     <artifactId>fireflyframework-client</artifactId>
-    <version>26.02.01</version>
+    <version>26.02.02</version>
     <packaging>jar</packaging>
 
     <name>Firefly Framework - Common Client Library</name>
     <description>A unified client library that provides reactive communication patterns for REST, SOAP, and gRPC services with circuit breaker support, health checks, and comprehensive monitoring capabilities.</description>
-
-    <properties>
-        <aws.sdk2.version>2.25.32</aws.sdk2.version>
-        <grpc.version>1.79.0</grpc.version>
-        <protobuf.version>3.25.1</protobuf.version>
-    </properties>
 
     <dependencies>
         <!-- Spring Boot WebFlux -->
@@ -116,26 +110,22 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- gRPC Dependencies -->
+        <!-- gRPC Dependencies (versions managed by parent via gRPC BOM) -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
-            <version>${grpc.version}</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>${grpc.version}</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
-            <version>${grpc.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>${protobuf.version}</version>
         </dependency>
 
         <!-- Circuit Breaker for resilience -->
@@ -164,7 +154,6 @@
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>4.0.3</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.soap</groupId>
@@ -185,7 +174,6 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-            <version>4.1.4</version>
             <exclusions>
                 <!-- Exclude spring-boot-starter-web to avoid conflicts with webflux -->
                 <exclusion>
@@ -197,22 +185,18 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-ws-security</artifactId>
-            <version>4.1.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-dom</artifactId>
-            <version>3.0.2</version>
         </dependency>
         <dependency>
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
-            <version>1.6.3</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-xjc</artifactId>
-            <version>4.0.6</version>
         </dependency>
 
         <!-- Testing -->
@@ -243,21 +227,18 @@
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-standalone</artifactId>
-            <version>3.13.2</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- gRPC testing support -->
+        <!-- gRPC testing support (versions managed by parent via gRPC BOM) -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-testing</artifactId>
-            <version>${grpc.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-inprocess</artifactId>
-            <version>${grpc.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
