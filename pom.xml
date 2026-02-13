@@ -18,6 +18,13 @@
     <description>A unified client library that provides reactive communication patterns for REST, SOAP, and gRPC services with circuit breaker support, health checks, and comprehensive monitoring capabilities.</description>
 
     <dependencies>
+        <!-- Firefly Kernel (exception hierarchy, shared abstractions) -->
+        <dependency>
+            <groupId>org.fireflyframework</groupId>
+            <artifactId>fireflyframework-kernel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- Spring Boot WebFlux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

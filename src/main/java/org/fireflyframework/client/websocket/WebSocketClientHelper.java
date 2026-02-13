@@ -1,6 +1,7 @@
 package org.fireflyframework.client.websocket;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.kernel.exception.FireflyInfrastructureException;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.socket.WebSocketHandler;
@@ -661,7 +662,9 @@ public class WebSocketClientHelper {
         WebSocketSession session = currentSession.getAndSet(null);
         if (session != null) {
             try {
-                session.close().subscribe();
+                session.close()
+                        .doOnError(err -> log.warn("Error during WebSocket session close for {}: {}", url, err.getMessage()))
+                        .subscribe();
                 log.info("Disconnected WebSocket for {}", url);
             } catch (Exception e) {
                 log.warn("Error closing WebSocket session for {}: {}", url, e.getMessage());
@@ -724,7 +727,7 @@ public class WebSocketClientHelper {
     /**
      * Custom exception for WebSocket reconnection failures.
      */
-    public static class WebSocketReconnectionException extends RuntimeException {
+    public static class WebSocketReconnectionException extends FireflyInfrastructureException {
         public WebSocketReconnectionException(String message) {
             super(message);
         }
@@ -733,7 +736,7 @@ public class WebSocketClientHelper {
     /**
      * Custom exception for WebSocket queue full.
      */
-    public static class WebSocketQueueFullException extends RuntimeException {
+    public static class WebSocketQueueFullException extends FireflyInfrastructureException {
         public WebSocketQueueFullException(String message) {
             super(message);
         }
@@ -742,7 +745,7 @@ public class WebSocketClientHelper {
     /**
      * Custom exception for WebSocket not connected.
      */
-    public static class WebSocketNotConnectedException extends RuntimeException {
+    public static class WebSocketNotConnectedException extends FireflyInfrastructureException {
         public WebSocketNotConnectedException(String message) {
             super(message);
         }

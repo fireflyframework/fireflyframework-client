@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.fireflyframework.client.ClientType;
 import org.fireflyframework.client.RestClient;
 import org.fireflyframework.client.exception.HttpErrorMapper;
+import org.fireflyframework.client.exception.RetryableError;
 import org.fireflyframework.client.exception.ServiceClientException;
 import org.fireflyframework.client.exception.ServiceSerializationException;
 import org.fireflyframework.client.exception.ErrorContext;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -69,6 +71,13 @@ public class RestServiceClientImpl implements RestClient {
     private final CircuitBreakerManager circuitBreakerManager;
     private final AtomicBoolean isShutdown = new AtomicBoolean(false);
 
+    // Retry configuration
+    private final boolean retryEnabled;
+    private final int retryMaxAttempts;
+    private final Duration retryInitialBackoff;
+    private final Duration retryMaxBackoff;
+    private final boolean retryJitterEnabled;
+
     /**
      * Creates a new REST service client implementation.
      */
@@ -79,6 +88,25 @@ public class RestServiceClientImpl implements RestClient {
                                 Map<String, String> defaultHeaders,
                                 WebClient webClient,
                                 CircuitBreakerManager circuitBreakerManager) {
+        this(serviceName, baseUrl, timeout, maxConnections, defaultHeaders, webClient,
+                circuitBreakerManager, true, 3, Duration.ofMillis(500), Duration.ofSeconds(10), true);
+    }
+
+    /**
+     * Creates a new REST service client implementation with retry configuration.
+     */
+    public RestServiceClientImpl(String serviceName,
+                                String baseUrl,
+                                Duration timeout,
+                                int maxConnections,
+                                Map<String, String> defaultHeaders,
+                                WebClient webClient,
+                                CircuitBreakerManager circuitBreakerManager,
+                                boolean retryEnabled,
+                                int retryMaxAttempts,
+                                Duration retryInitialBackoff,
+                                Duration retryMaxBackoff,
+                                boolean retryJitterEnabled) {
         this.serviceName = serviceName;
         this.baseUrl = baseUrl;
         this.timeout = timeout;
@@ -86,8 +114,14 @@ public class RestServiceClientImpl implements RestClient {
         this.defaultHeaders = Map.copyOf(defaultHeaders);
         this.webClient = webClient != null ? webClient : createDefaultWebClient();
         this.circuitBreakerManager = circuitBreakerManager;
+        this.retryEnabled = retryEnabled;
+        this.retryMaxAttempts = retryMaxAttempts;
+        this.retryInitialBackoff = retryInitialBackoff;
+        this.retryMaxBackoff = retryMaxBackoff;
+        this.retryJitterEnabled = retryJitterEnabled;
 
-        log.info("Initialized REST service client for '{}' with enhanced circuit breaker and base URL '{}'", serviceName, baseUrl);
+        log.info("Initialized REST service client for '{}' with base URL '{}', retry={} (maxAttempts={}, backoff={})",
+                serviceName, baseUrl, retryEnabled, retryMaxAttempts, retryInitialBackoff);
     }
 
     // ========================================
@@ -473,8 +507,34 @@ public class RestServiceClientImpl implements RestClient {
                 }
             });
 
-            // Apply circuit breaker protection
-            return applyCircuitBreakerProtection(baseRequest);
+            // Apply retry (inside circuit breaker scope), then circuit breaker protection
+            Mono<R> retriedRequest = applyRetry(baseRequest);
+            return applyCircuitBreakerProtection(retriedRequest);
+        }
+
+        private Mono<R> applyRetry(Mono<R> operation) {
+            if (!retryEnabled || retryMaxAttempts <= 0) {
+                return operation;
+            }
+
+            Retry retrySpec = Retry.backoff(retryMaxAttempts, retryInitialBackoff)
+                    .maxBackoff(retryMaxBackoff)
+                    .jitter(retryJitterEnabled ? 0.5 : 0.0)
+                    .filter(throwable -> throwable instanceof RetryableError
+                            && ((RetryableError) throwable).isRetryable())
+                    .doBeforeRetry(signal -> log.warn(
+                            "Retrying request for service '{}' (attempt {}/{}): {}",
+                            serviceName, signal.totalRetries() + 1, retryMaxAttempts,
+                            signal.failure().getMessage()));
+
+            return operation.retryWhen(retrySpec)
+                    .onErrorMap(ex -> ex instanceof IllegalStateException && ex.getCause() != null
+                                    && ex.getMessage() != null && ex.getMessage().contains("Retries exhausted"),
+                            ex -> {
+                                log.error("All {} retry attempts exhausted for service '{}': {}",
+                                        retryMaxAttempts, serviceName, ex.getCause().getMessage());
+                                return ex.getCause();
+                            });
         }
 
         private Mono<R> applyCircuitBreakerProtection(Mono<R> operation) {

@@ -2,6 +2,7 @@ package org.fireflyframework.client.oauth2;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.kernel.exception.FireflySecurityException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -574,7 +575,7 @@ public class OAuth2ClientHelper {
     /**
      * OAuth2 exception.
      */
-    public static class OAuth2Exception extends RuntimeException {
+    public static class OAuth2Exception extends FireflySecurityException {
         public OAuth2Exception(String message) {
             super(message);
         }
