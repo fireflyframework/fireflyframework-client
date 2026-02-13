@@ -160,9 +160,18 @@ public class ServiceClientAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public RestClientBuilder restClientBuilder(CircuitBreakerManager circuitBreakerManager) {
-        log.info("Configuring default REST client builder with enhanced circuit breaker");
+        log.info("Configuring default REST client builder with enhanced circuit breaker and retry");
+
+        var retryProps = properties.getRetry();
         return new RestClientBuilder("default")
-            .circuitBreakerManager(circuitBreakerManager);
+            .circuitBreakerManager(circuitBreakerManager)
+            .retry(
+                retryProps.isEnabled(),
+                retryProps.getMaxAttempts(),
+                retryProps.getWaitDuration(),
+                retryProps.getMaxWaitDuration(),
+                retryProps.isJitterEnabled()
+            );
     }
 
     /**

@@ -39,7 +39,7 @@ import lombok.Getter;
  * @since 1.0.0
  */
 @Getter
-public class ServiceClientException extends RuntimeException {
+public class ServiceClientException extends org.fireflyframework.kernel.exception.FireflyInfrastructureException {
 
     /**
      * Rich context information about the error.

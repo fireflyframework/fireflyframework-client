@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.kernel.exception.FireflySecurityException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -296,7 +297,7 @@ public class JwtValidator {
     /**
      * JWT validation exception.
      */
-    public static class JwtValidationException extends Exception {
+    public static class JwtValidationException extends FireflySecurityException {
         public JwtValidationException(String message) {
             super(message);
         }

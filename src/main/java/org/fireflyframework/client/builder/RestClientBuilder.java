@@ -64,6 +64,13 @@ public class RestClientBuilder {
     private WebClient webClient;
     private CircuitBreakerManager circuitBreakerManager;
 
+    // Retry configuration
+    private boolean retryEnabled = true;
+    private int retryMaxAttempts = 3;
+    private Duration retryInitialBackoff = Duration.ofMillis(500);
+    private Duration retryMaxBackoff = Duration.ofSeconds(10);
+    private boolean retryJitterEnabled = true;
+
     /**
      * Creates a new REST client builder.
      *
@@ -147,6 +154,36 @@ public class RestClientBuilder {
     }
 
     /**
+     * Configures retry behavior for the client.
+     *
+     * @param enabled whether retry is enabled
+     * @param maxAttempts maximum number of retry attempts
+     * @param initialBackoff initial wait duration before first retry
+     * @param maxBackoff maximum wait duration between retries
+     * @param jitterEnabled whether to add randomized jitter to backoff
+     * @return this builder
+     */
+    public RestClientBuilder retry(boolean enabled, int maxAttempts, Duration initialBackoff,
+                                   Duration maxBackoff, boolean jitterEnabled) {
+        this.retryEnabled = enabled;
+        this.retryMaxAttempts = maxAttempts;
+        this.retryInitialBackoff = initialBackoff;
+        this.retryMaxBackoff = maxBackoff;
+        this.retryJitterEnabled = jitterEnabled;
+        return this;
+    }
+
+    /**
+     * Disables retry for the client.
+     *
+     * @return this builder
+     */
+    public RestClientBuilder noRetry() {
+        this.retryEnabled = false;
+        return this;
+    }
+
+    /**
      * Convenience method to set JSON content type headers.
      *
      * @return this builder
@@ -179,7 +216,12 @@ public class RestClientBuilder {
             maxConnections,
             defaultHeaders,
             webClient,
-            circuitBreakerManager
+            circuitBreakerManager,
+            retryEnabled,
+            retryMaxAttempts,
+            retryInitialBackoff,
+            retryMaxBackoff,
+            retryJitterEnabled
         );
     }
 

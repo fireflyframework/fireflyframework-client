@@ -1,6 +1,7 @@
 package org.fireflyframework.client.multipart;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.kernel.exception.FireflyException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -941,7 +942,7 @@ public class MultipartUploadHelper {
     /**
      * Exception thrown when file validation fails.
      */
-    public static class UploadValidationException extends RuntimeException {
+    public static class UploadValidationException extends FireflyException {
         public UploadValidationException(String message) {
             super(message);
         }

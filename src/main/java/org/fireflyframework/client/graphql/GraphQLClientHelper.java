@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
+import org.fireflyframework.kernel.exception.FireflyInfrastructureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -448,11 +449,11 @@ public class GraphQLClientHelper {
     /**
      * GraphQL exception.
      */
-    public static class GraphQLException extends RuntimeException {
+    public static class GraphQLException extends FireflyInfrastructureException {
         public GraphQLException(String message) {
             super(message);
         }
-        
+
         public GraphQLException(String message, Throwable cause) {
             super(message, cause);
         }
