@@ -1,4 +1,4 @@
-package org.fireflyframework.config;
+package org.fireflyframework.client.config;
 
 import org.fireflyframework.client.ServiceClient;
 import org.fireflyframework.client.builder.RestClientBuilder;

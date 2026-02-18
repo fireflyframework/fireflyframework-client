@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.config;
+package org.fireflyframework.client.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import java.util.Map;
  * @author Firefly Software Solutions Inc
  * @since 2.0.0
  */
+@Validated
 @ConfigurationProperties(prefix = "firefly.service-client")
 @Data
 public class ServiceClientProperties {

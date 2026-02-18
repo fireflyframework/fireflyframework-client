@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fireflyframework.config;
+package org.fireflyframework.client.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

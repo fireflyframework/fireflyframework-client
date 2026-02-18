@@ -7,11 +7,11 @@
     <parent>
         <groupId>org.fireflyframework</groupId>
         <artifactId>fireflyframework-parent</artifactId>
-        <version>26.02.04</version>
+        <version>26.02.05</version>
     </parent>
 
     <artifactId>fireflyframework-client</artifactId>
-    <version>26.02.04</version>
+    <version>26.02.05</version>
     <packaging>jar</packaging>
 
     <name>Firefly Framework - Common Client Library</name>
