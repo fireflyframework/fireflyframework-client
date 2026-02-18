@@ -70,8 +70,8 @@ public class ServiceClientAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public WebClient.Builder webClientBuilder() {
+    @ConditionalOnMissingBean(WebClient.Builder.class)
+    public WebClient.Builder fireflyServiceWebClientBuilder() {
         log.info("Configuring enhanced WebClient builder for REST service clients");
 
         ServiceClientProperties.Rest restConfig = properties.getRest();
@@ -158,8 +158,8 @@ public class ServiceClientAutoConfiguration {
      * Creates a default REST client builder if none is provided.
      */
     @Bean
-    @ConditionalOnMissingBean
-    public RestClientBuilder restClientBuilder(CircuitBreakerManager circuitBreakerManager) {
+    @ConditionalOnMissingBean(RestClientBuilder.class)
+    public RestClientBuilder fireflyRestClientBuilder(CircuitBreakerManager circuitBreakerManager) {
         log.info("Configuring default REST client builder with enhanced circuit breaker and retry");
 
         var retryProps = properties.getRetry();
