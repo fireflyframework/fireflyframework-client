@@ -61,7 +61,7 @@ Additional features include a chaos engineering interceptor for fault injection 
 <dependency>
     <groupId>org.fireflyframework</groupId>
     <artifactId>fireflyframework-client</artifactId>
-    <version>26.02.06</version>
+    <version>26.02.07</version>
 </dependency>
 ```
 
