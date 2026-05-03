@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2026 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.time.Duration;
  *
  * <p>This error is retryable after a delay.
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 public class BulkheadFullException extends ServiceClientException implements RetryableError {

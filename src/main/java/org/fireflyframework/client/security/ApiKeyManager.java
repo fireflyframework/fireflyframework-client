@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * String key = keyManager.getCurrentApiKey();
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 1.0.0
  */
 @Slf4j

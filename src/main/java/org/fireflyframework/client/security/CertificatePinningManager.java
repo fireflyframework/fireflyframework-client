@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * SslContext sslContext = pinning.createSslContext();
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 1.0.0
  */
 @Slf4j

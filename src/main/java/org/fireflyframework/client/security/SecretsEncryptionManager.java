@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * String apiKey = encryption.getSecret("payment-api-key");
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 1.0.0
  */
 @Slf4j

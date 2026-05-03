@@ -60,7 +60,7 @@ import java.util.function.Supplier;
  * ).subscribe();
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 @Slf4j

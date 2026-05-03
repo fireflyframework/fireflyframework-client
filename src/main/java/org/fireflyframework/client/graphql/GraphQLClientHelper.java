@@ -56,7 +56,7 @@ import java.util.function.Function;
  * Mono<User> user = graphql.query(query, variables, "user", User.class);
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 @Slf4j

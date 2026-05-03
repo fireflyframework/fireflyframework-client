@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * }
  * }</pre>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 1.0.0
  */
 @Slf4j
