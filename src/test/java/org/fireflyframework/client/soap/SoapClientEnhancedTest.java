@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2026 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * Enhanced tests for SOAP client with WSDL URL parsing, SSL, and advanced features.
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 @DisplayName("SOAP Client Enhanced Features Tests")

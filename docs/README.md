@@ -298,5 +298,5 @@ class UserServiceTest {
 
 ---
 
-**Built with ❤️ by Firefly Software Solutions Inc**
+**Built with ❤️ by Firefly Software Foundation**
 

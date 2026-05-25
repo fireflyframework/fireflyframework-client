@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2026 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ package org.fireflyframework.client.exception;
  *
  * <p>This error is NOT retryable as it indicates a configuration problem.
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 public class WsdlParsingException extends ServiceClientException {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2026 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ import java.util.function.Function;
  * and streaming operations.
  *
  * @param <T> the gRPC stub type
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 @Slf4j

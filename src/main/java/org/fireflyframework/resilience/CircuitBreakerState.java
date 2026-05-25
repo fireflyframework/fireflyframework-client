@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2026 Firefly Software Solutions Inc
+ * Copyright 2024-2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ package org.fireflyframework.resilience;
  *   <li><strong>HALF_OPEN:</strong> Limited requests are allowed to test if the service has recovered</li>
  * </ul>
  *
- * @author Firefly Software Solutions Inc
+ * @author Firefly Software Foundation
  * @since 2.0.0
  */
 public enum CircuitBreakerState {
