@@ -1,7 +1,8 @@
 package org.fireflyframework.example.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.fireflyframework.client.RestClient;
 import org.fireflyframework.client.ServiceClient;
-import org.fireflyframework.client.rest.RestClient;
 import org.fireflyframework.example.model.User;
 import org.fireflyframework.example.model.CreateUserRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class UserService {
             .baseUrl("https://jsonplaceholder.typicode.com")
             .timeout(Duration.ofSeconds(30))
             .build();
-        
+
         log.info("UserService initialized with REST client");
     }
 
@@ -37,10 +38,10 @@ public class UserService {
      */
     public User getUser(Long userId) {
         log.info("Fetching user with ID: {}", userId);
-        
-        return userClient.get("/users/{id}")
-            .pathVariable("id", userId)
-            .retrieve(User.class)
+
+        return userClient.get("/users/{id}", User.class)
+            .withPathParam("id", userId)
+            .execute()
             .block();
     }
 
@@ -49,9 +50,9 @@ public class UserService {
      */
     public List<User> getAllUsers() {
         log.info("Fetching all users");
-        
-        return userClient.get("/users")
-            .retrieveList(User.class)
+
+        return userClient.get("/users", new TypeReference<List<User>>() {})
+            .execute()
             .block();
     }
 
@@ -60,10 +61,10 @@ public class UserService {
      */
     public User createUser(CreateUserRequest request) {
         log.info("Creating user: {}", request.getName());
-        
-        return userClient.post("/users")
-            .body(request)
-            .retrieve(User.class)
+
+        return userClient.post("/users", User.class)
+            .withBody(request)
+            .execute()
             .block();
     }
 
@@ -72,11 +73,11 @@ public class UserService {
      */
     public User updateUser(Long userId, CreateUserRequest request) {
         log.info("Updating user with ID: {}", userId);
-        
-        return userClient.put("/users/{id}")
-            .pathVariable("id", userId)
-            .body(request)
-            .retrieve(User.class)
+
+        return userClient.put("/users/{id}", User.class)
+            .withPathParam("id", userId)
+            .withBody(request)
+            .execute()
             .block();
     }
 
@@ -85,9 +86,9 @@ public class UserService {
      */
     public void deleteUser(Long userId) {
         log.info("Deleting user with ID: {}", userId);
-        
-        userClient.delete("/users/{id}")
-            .pathVariable("id", userId)
+
+        userClient.delete("/users/{id}", Void.class)
+            .withPathParam("id", userId)
             .execute()
             .block();
     }
@@ -97,11 +98,10 @@ public class UserService {
      */
     public List<User> searchUsers(String query) {
         log.info("Searching users with query: {}", query);
-        
-        return userClient.get("/users")
-            .queryParam("q", query)
-            .retrieveList(User.class)
+
+        return userClient.get("/users", new TypeReference<List<User>>() {})
+            .withQueryParam("q", query)
+            .execute()
             .block();
     }
 }
-

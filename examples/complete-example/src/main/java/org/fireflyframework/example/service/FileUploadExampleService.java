@@ -1,15 +1,17 @@
 package org.fireflyframework.example.service;
 
 import org.fireflyframework.client.multipart.MultipartUploadHelper;
-import org.fireflyframework.client.multipart.MultipartConfig;
-import org.fireflyframework.client.multipart.UploadProgress;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadConfig;
+import org.fireflyframework.client.multipart.MultipartUploadHelper.UploadProgress;
 import org.fireflyframework.example.model.UploadResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Example service demonstrating multipart upload with:
@@ -26,22 +28,23 @@ public class FileUploadExampleService {
     private final MultipartUploadHelper uploadClient;
 
     public FileUploadExampleService() {
-        MultipartConfig config = MultipartConfig.builder()
+        UploadConfig config = UploadConfig.builder()
             .timeout(Duration.ofMinutes(5))
-            .enableProgressTracking(true)
             .enableCompression(true)
             .enableRetry(true)
             .maxRetries(3)
             .chunkSize(5 * 1024 * 1024) // 5MB chunks
             .maxFileSize(100 * 1024 * 1024) // 100MB max
-            .allowedMimeTypes(List.of("image/jpeg", "image/png", "application/pdf"))
+            .allowedMimeType("image/jpeg")
+            .allowedMimeType("image/png")
+            .allowedMimeType("application/pdf")
             .build();
 
         this.uploadClient = new MultipartUploadHelper(
             "https://upload.example.com",
             config
         );
-        
+
         log.info("FileUploadExampleService initialized");
     }
 
@@ -50,12 +53,13 @@ public class FileUploadExampleService {
      */
     public UploadResponse uploadFile(File file) {
         log.info("Uploading file: {}", file.getName());
-        
-        return uploadClient.uploadFile(
+
+        return uploadClient.uploadFileWithProgress(
             "/upload",
             file,
-            UploadResponse.class,
-            this::logProgress
+            "file",
+            this::logProgress,
+            UploadResponse.class
         ).block();
     }
 
@@ -64,12 +68,13 @@ public class FileUploadExampleService {
      */
     public UploadResponse uploadLargeFile(File file) {
         log.info("Uploading large file in chunks: {}", file.getName());
-        
+
         return uploadClient.uploadFileChunked(
             "/upload/chunked",
             file,
-            UploadResponse.class,
-            this::logProgress
+            "file",
+            this::logProgress,
+            UploadResponse.class
         ).block();
     }
 
@@ -78,13 +83,18 @@ public class FileUploadExampleService {
      */
     public List<UploadResponse> uploadMultipleFiles(List<File> files) {
         log.info("Uploading {} files in parallel", files.size());
-        
+
+        Map<String, File> namedFiles = new LinkedHashMap<>();
+        for (File file : files) {
+            namedFiles.put(file.getName(), file);
+        }
+
         return uploadClient.uploadFilesParallel(
             "/upload",
-            files,
-            UploadResponse.class,
-            this::logProgress
-        ).block();
+            namedFiles,
+            this::logProgress,
+            UploadResponse.class
+        ).collectList().block();
     }
 
     /**
@@ -92,16 +102,15 @@ public class FileUploadExampleService {
      */
     public UploadResponse uploadFileWithMetadata(File file, String description, String category) {
         log.info("Uploading file with metadata: {}", file.getName());
-        
-        return uploadClient.uploadFileWithMetadata(
+
+        return uploadClient.uploadFilesWithMetadata(
             "/upload",
-            file,
-            java.util.Map.of(
+            Map.of("file", file),
+            Map.of(
                 "description", description,
                 "category", category
             ),
-            UploadResponse.class,
-            this::logProgress
+            UploadResponse.class
         ).block();
     }
 
@@ -123,13 +132,11 @@ public class FileUploadExampleService {
      * Log upload progress.
      */
     private void logProgress(UploadProgress progress) {
-        log.info("Upload progress: {}% ({} / {} bytes) - Speed: {} KB/s - ETA: {}s",
-            progress.getPercentage(),
-            progress.getBytesUploaded(),
+        log.info("Upload progress: {}% ({} / {} bytes) - Speed: {} KB/s",
+            String.format("%.1f", progress.getPercentage()),
+            progress.getUploadedBytes(),
             progress.getTotalBytes(),
-            progress.getUploadSpeedKBps(),
-            progress.getEstimatedTimeRemainingSeconds()
+            String.format("%.1f", progress.getSpeedBytesPerSecond() / 1024)
         );
     }
 }
-

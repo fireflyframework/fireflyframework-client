@@ -1,13 +1,13 @@
 package org.fireflyframework.example.service;
 
 import org.fireflyframework.client.oauth2.OAuth2ClientHelper;
-import org.fireflyframework.client.oauth2.OAuth2Config;
-import org.fireflyframework.client.oauth2.OAuth2Token;
+import org.fireflyframework.client.oauth2.OAuth2ClientHelper.OAuth2Config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Map;
 
 /**
  * Example service demonstrating OAuth2 client usage with:
@@ -41,18 +41,17 @@ public class OAuth2ExampleService {
             clientSecret,
             config
         );
-        
+
         log.info("OAuth2ExampleService initialized");
     }
 
     /**
-     * Get an access token with default scope.
+     * Get an access token with default scope (client credentials grant).
      */
     public String getAccessToken() {
         log.info("Getting OAuth2 access token");
-        
-        OAuth2Token token = oauth2Client.getToken();
-        return token.getAccessToken();
+
+        return oauth2Client.getClientCredentialsToken().block();
     }
 
     /**
@@ -60,9 +59,8 @@ public class OAuth2ExampleService {
      */
     public String getAccessTokenWithScopes(String... scopes) {
         log.info("Getting OAuth2 access token with scopes: {}", String.join(" ", scopes));
-        
-        OAuth2Token token = oauth2Client.getToken(String.join(" ", scopes));
-        return token.getAccessToken();
+
+        return oauth2Client.getClientCredentialsToken(String.join(" ", scopes)).block();
     }
 
     /**
@@ -70,9 +68,11 @@ public class OAuth2ExampleService {
      */
     public String getIdToken() {
         log.info("Getting OAuth2 ID token");
-        
-        OAuth2Token token = oauth2Client.getToken("openid profile email");
-        return token.getIdToken();
+
+        return oauth2Client
+            .getTokenResponse("client_credentials", Map.of("scope", "openid profile email"))
+            .map(OAuth2ClientHelper.TokenResponse::getIdToken)
+            .block();
     }
 
     /**
@@ -97,4 +97,3 @@ public class OAuth2ExampleService {
         return oauth2Client.getCacheSize();
     }
 }
-
